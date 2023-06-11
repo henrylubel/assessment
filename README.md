@@ -21,9 +21,12 @@ as part of a techincal assessment.
 
 * Open a command line in your SO
 * Go to the project directory and run 
+
 ```
 dotnet run --Environment="Development"
 ```
+
+* The project also has a dockerimage file but was not tested.
 
 ## Authors
 
