@@ -3,16 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33723.286
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assessment.Api", "Assesment\Assessment.Api.csproj", "{A84B9295-8C8E-4584-A2B0-B95506377382}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assessment.Api", "Assesment\Assessment.Api.csproj", "{A84B9295-8C8E-4584-A2B0-B95506377382}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution items", "Solution items", "{43941302-FB50-4F9A-AB96-73A1BA364729}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
 		db.sql = db.sql
+		Dockerfile = Dockerfile
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assessment.Core", "Assessment.Core\Assessment.Core.csproj", "{FAE54DF5-D862-421B-9D60-FB376ADD6BC4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assessment.Core", "Assessment.Core\Assessment.Core.csproj", "{FAE54DF5-D862-421B-9D60-FB376ADD6BC4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

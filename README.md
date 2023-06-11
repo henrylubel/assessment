@@ -1,11 +1,9 @@
-# Project Title
-
-Order Management System REST API
+# Order Management System REST API
 
 ## Description
 
 The following code repository is a REST API for managing a generic Products and Orders entities
-as part of a techincal assesment.
+as part of a techincal assessment.
 
 ## Getting Started
 
@@ -15,7 +13,9 @@ as part of a techincal assesment.
 
 ### Installing
 
-* Just clone this repository into your local machine
+* Clone this repository into your local machine
+* Execute db.sql in your favourite MS SQL instance
+* Add the corresponding connection string to appsettings.json placeholder
 
 ### Executing program
 

@@ -11,11 +11,13 @@ namespace Assessment.Controllers
 
         private readonly ILogger<OrderController> _logger;
         private readonly IRepository<Order> _orderRepository;
+        private readonly IRepository<Product> _productRepository;
 
-        public OrderController(ILogger<OrderController> logger, IRepository<Order> orderRepository)
+        public OrderController(ILogger<OrderController> logger, IRepository<Order> orderRepository, IRepository<Product> productRepository)
         {
             _logger = logger;
             _orderRepository = orderRepository;
+            _productRepository = productRepository;
         }
 
         [HttpGet("{id}")]
@@ -45,6 +47,12 @@ namespace Assessment.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateOrder([FromBody] Order order, CancellationToken cancellationToken)
         {
+
+            if (order is null || order.Quantity < 1 ||
+                (await _productRepository.GetByIdAsync(order.ProductId, cancellationToken)) is null)
+
+                return BadRequest();
+
             _logger.LogInformation("Creating Order for customer: {0}", order.CustomerId);
 
             try
