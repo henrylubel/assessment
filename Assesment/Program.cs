@@ -35,6 +35,7 @@ try
 
     services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
     services.AddTransient(typeof(IRepository<Order>), typeof(Repository<Order>));
+    services.AddTransient<IUnitOfWork, UnitOfWork>();
 
     var app = builder.Build();
 
