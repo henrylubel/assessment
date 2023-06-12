@@ -48,16 +48,15 @@ namespace Assessment.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateOrder([FromBody] OrderDto orderDto, CancellationToken cancellationToken)
         {
-
-            if (orderDto is null || orderDto.Quantity < 1 ||
-                (await _productRepository.GetByIdAsync(orderDto.ProductId, cancellationToken)) is null)
-
-                return BadRequest();
-
-            _logger.LogInformation("Creating Order for customer: {0}", orderDto.CustomerId);
-
             try
             {
+                if (orderDto is null || orderDto.Quantity < 1 ||
+                (await _productRepository.GetByIdAsync(orderDto.ProductId, cancellationToken)) is null)
+
+                    return BadRequest();
+
+                _logger.LogInformation("Creating Order for customer: {0}", orderDto.CustomerId);
+
                 var order = new Order
                 {
                     CustomerId = orderDto.CustomerId,
