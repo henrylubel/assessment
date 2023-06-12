@@ -20,9 +20,7 @@ namespace Assessment.Core.Domain.Repositories
         public async override Task<int> CreateAsync(Order entity, CancellationToken cancellationToken)
         {
             using var tran = await _unitOfWork.BeginTransactionAsync(cancellationToken);
-
-            var cmd = _assessmentContext.Database.GetDbConnection()
-               .CreateCommand();
+            using var cmd = _assessmentContext.Database.GetDbConnection().CreateCommand();
 
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
             cmd.Transaction = tran.GetDbTransaction();
@@ -30,15 +28,12 @@ namespace Assessment.Core.Domain.Repositories
             cmd.Parameters.Add(new SqlParameter("@CustomerId", entity.CustomerId));
             cmd.Parameters.Add(new SqlParameter("@ProductId", entity.ProductId));
             cmd.Parameters.Add(new SqlParameter("@Quantity", entity.Quantity));
-
+          
             var newId = (await cmd.ExecuteScalarAsync(cancellationToken)) as int?;
 
             await tran.CommitAsync(cancellationToken);
 
-            if (newId is null)
-                throw new Exception("Entity could not be created");
-
-            return newId.Value;
+            return newId ?? 0;
         }
     }
 }
