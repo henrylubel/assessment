@@ -2,6 +2,7 @@
 using Assessment.Core.Domain.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Assessment.Core.Domain.Repositories
 {
@@ -24,12 +25,15 @@ namespace Assessment.Core.Domain.Repositories
                .CreateCommand();
 
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            cmd.Transaction = tran.GetDbTransaction();
             cmd.CommandText = "spCreateOrder";
             cmd.Parameters.Add(new SqlParameter("@CustomerId", entity.CustomerId));
             cmd.Parameters.Add(new SqlParameter("@ProductId", entity.ProductId));
             cmd.Parameters.Add(new SqlParameter("@Quantity", entity.Quantity));
 
             var newId = (await cmd.ExecuteScalarAsync(cancellationToken)) as int?;
+
+            await tran.CommitAsync(cancellationToken);
 
             if (newId is null)
                 throw new Exception("Entity could not be created");

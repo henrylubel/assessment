@@ -33,8 +33,8 @@ try
     services.AddDbContext<AssessmentContext>(options =>
         options.UseSqlServer(config.GetSection("ConnectionStrings:AssessmentDb").Value));
 
+    services.AddTransient(typeof(IRepository<Order>), typeof(OrderRepository));
     services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
-    services.AddTransient(typeof(IRepository<Order>), typeof(Repository<Order>));
     services.AddTransient<IUnitOfWork, UnitOfWork>();
 
     var app = builder.Build();

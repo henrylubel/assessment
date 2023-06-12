@@ -1,5 +1,6 @@
 using Assessment.Core.Domain.Models;
 using Assessment.Core.Domain.Repositories;
+using Assessment.Core.Dtos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Assessment.Controllers
@@ -45,18 +46,25 @@ namespace Assessment.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateOrder([FromBody] Order order, CancellationToken cancellationToken)
+        public async Task<IActionResult> CreateOrder([FromBody] OrderDto orderDto, CancellationToken cancellationToken)
         {
 
-            if (order is null || order.Quantity < 1 ||
-                (await _productRepository.GetByIdAsync(order.ProductId, cancellationToken)) is null)
+            if (orderDto is null || orderDto.Quantity < 1 ||
+                (await _productRepository.GetByIdAsync(orderDto.ProductId, cancellationToken)) is null)
 
                 return BadRequest();
 
-            _logger.LogInformation("Creating Order for customer: {0}", order.CustomerId);
+            _logger.LogInformation("Creating Order for customer: {0}", orderDto.CustomerId);
 
             try
             {
+                var order = new Order
+                {
+                    CustomerId = orderDto.CustomerId,
+                    ProductId = orderDto.ProductId,
+                    Quantity = orderDto.Quantity
+                };
+
                 await _orderRepository.CreateAsync(order, cancellationToken);
 
                 return Ok();
@@ -64,7 +72,7 @@ namespace Assessment.Controllers
 
             catch (Exception ex)
             {
-                _logger.LogInformation("Unable to create Order for customer {0}. {1}", order.CustomerId, ex);
+                _logger.LogInformation("Unable to create Order for customer {0}. {1}", orderDto.CustomerId, ex);
 
                 throw;
             }
